@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Webpage</title>
+    </head>
+    <body>
+        <h1 style="margin:50px 50px 50px 650px">My Assignment</h1>
+        <p style="color:rgb(193, 14, 193);font-size:25px;margin:50px 50px 50px 550px">Array of number of people got into the bus</p>
+        <p id="demo" style="padding:0 0 0 48%;color:red;font-size:23px;"></p>
+        <script>
+        
+            try{
+                let result=do_allocation(10,5);
+                document.getElementById('demo').innerHTML=result;
+            }
+            catch(err)
+            {
+                document.getElementById('demo').innerHTML=err.message;
+
+            }
+            finally
+            {
+                document.getElementById('demo').innerHTML=result;
+
+            }
+            function do_allocation(numOfPeople,numOfBuses)
+            {
+                //check if the bus count is>0
+                if(numOfBuses<=0)
+                throw "Number of buses is less than or equal to 0";
+                let peopleOnBuses=new Array(numOfBuses);
+                let busCapacity=new Array(numOfBuses);
+                let busCapacityIdx=0;
+                let peopleOnBusesIdx=0;
+                let buses=numOfBuses;
+                let people=numOfPeople;
+
+                while(buses>0)
+                {
+                    if(busCapacityIdx==0)
+                    busCapacity[0]=1;
+                    else if(busCapacityIdx==1)
+                    busCapacity[1]=busCapacity[0];
+                    else 
+                    busCapacity[busCapacityIdx]=busCapacity[busCapacityIdx-1]+
+                    busCapacity[busCapacityIdx-2];
+                    buses--;
+                    busCapacityIdx++;
+                }
+
+                busCapacityIdx=0;
+                while(people>0)
+                {
+                    /*check if the num of people cannot be
+                     accomadated in the num of buses*/
+                    if(peopleOnBusesIdx>=peopleOnBuses.length)
+                    throw "The number of people, can not be accommodated in the number of buses";
+
+                    if(people>busCapacity[busCapacityIdx])
+                    peopleOnBuses[peopleOnBusesIdx]=busCapacity[busCapacityIdx];
+                    else
+                    {
+                        peopleOnBuses[peopleOnBusesIdx]=people;
+                        break;
+                    }
+                    people-=busCapacity[busCapacityIdx];
+                    busCapacityIdx++;
+                    peopleOnBusesIdx++;
+                }
+                  return peopleOnBuses;
+                }
+            
+        
+        </script>
+    </body>
+</html>
